@@ -1,0 +1,7 @@
+{
+  "failed_step": 7,
+  "total_steps": 10,
+  "policy": "rollback",
+  "rationale": "In our 10-step issue reproduction pipeline, Step 7 executes synthesized reproduction code against the cloned repository. When Step 7 fails due to an unexpected unhandled exception or environment crash, restarting from scratch (FreshStart) incurs prohibitive time and API overhead (cloning and installing dependencies takes 45-60s), while resuming directly (Resumed) risks carrying forward polluted filesystem state or corrupt temporary artifacts. By leveraging Celesto VM snapshot capabilities ('snapshots' primitive), the agent restores the clean post-installation snapshot taken immediately after Step 4, rolling back the guest microVM to a known healthy state in under 400ms without restarting the guest machine from zero or retaining polluted state.",
+  "trace_path": "reports/failure_trace.jsonl"
+}

@@ -1,0 +1,6 @@
+{
+  "who": "Software engineering teams triaging complex, untrusted open-source bug reports and reproduction scripts without risking host environment integrity.",
+  "agent_work": "Clones untrusted target repositories inside an isolated Celesto microVM, executes dependency installation, analyzes issue reproduction steps, and synthesizes an isolated failing pytest/unit test verifying the reported defect without contaminating the host system.",
+  "proof_output": "A reproducible test file test_reproduced_issue.py verified to fail specifically due to the reported assertion failure, along with an execution audit report.",
+  "idea_source": "idea_bank"
+}

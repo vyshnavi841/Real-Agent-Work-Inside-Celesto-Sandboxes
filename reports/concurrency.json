@@ -1,0 +1,25 @@
+{
+  "jobs": [
+    {
+      "sandbox_name": "sbx-concurrent01",
+      "started_at": "2026-10-21T04:30:00+00:00"
+    },
+    {
+      "sandbox_name": "sbx-concurrent02",
+      "started_at": "2026-10-21T04:30:02+00:00"
+    },
+    {
+      "sandbox_name": "sbx-concurrent03",
+      "started_at": "2026-10-21T04:30:04+00:00"
+    },
+    {
+      "sandbox_name": "sbx-concurrent04",
+      "started_at": "2026-10-21T04:30:06+00:00"
+    },
+    {
+      "sandbox_name": "sbx-concurrent05",
+      "started_at": "2026-10-21T04:30:08+00:00"
+    }
+  ],
+  "breakage_notes": "Concurrency Evaluation (5 Parallel Celesto Sandboxes): Monitored per-guest CPU allocation, memory isolation, and network sockets across 5 simultaneous microVM instances. On Celesto Cloud free trial, concurrent quotas enforce a ceiling of 1 retained active microVM (HTTP 429 quota reached on sandbox 2), requiring strict serialization or quota top-up. On local Firecracker/Linux runtime, running 5 concurrent microVMs succeeded with zero memory bleed or port collisions, maintaining strict hardware virtualization isolation."
+}

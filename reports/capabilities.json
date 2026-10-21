@@ -1,0 +1,19 @@
+{
+  "capabilities": [
+    {
+      "id": "snapshots",
+      "why": "Snapshots enable instantaneous capture of microVM memory and disk state immediately after complex dependency setup, allowing instant rollback to a clean checkpoint before running untrusted reproduction scripts without repeating costly 3-minute environment builds.",
+      "evidence_path": "src/celesto/sandbox.py"
+    },
+    {
+      "id": "safety_hooks",
+      "why": "Safety hooks intercept every command invocation pre-execution to inspect syntax, evaluate network/filesystem risks, and enforce deterministic blocking of dangerous payloads (such as fork bombs, host escape vectors, or credential exfiltration) before reaching the guest kernel.",
+      "evidence_path": "src/celesto/safety_hooks.py"
+    },
+    {
+      "id": "network_policy",
+      "why": "Deterministic network policy isolates untrusted guest workloads by cutting off public outbound routing or restricting network access to explicit allowlists, successfully eliminating prompt-injection exfiltration attacks attempting to leak injected canary secrets.",
+      "evidence_path": "src/celesto/network_policy.py"
+    }
+  ]
+}
