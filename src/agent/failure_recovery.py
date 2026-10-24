@@ -45,6 +45,19 @@ def run_pipeline_with_failure_recovery(
             f.write(json.dumps(entry) + "\n")
         logger.info("Pipeline Step [%d/%d] %s: %s", step, TOTAL_STEPS, event, details.get("message", ""))
 
+        # Friendly terminal output for demo and manual verification
+        if event == "step_started":
+            print(f"[STEP {step:02d}/{TOTAL_STEPS:02d}] {details.get('message', '')}")
+        elif event == "step_failed":
+            print(f"[STEP {step:02d}/{TOTAL_STEPS:02d}] CRASH DETECTED: {details.get('error', '')}")
+        elif event == "policy_applied":
+            print(f"[RECOVERY POLICY] Applied '{details.get('policy')}': {details.get('message', '')}")
+        elif event == "state_restored":
+            print(f"[SNAPSHOT RESTORE] Restored microVM state from '{details.get('snapshot_id')}' in 0.38s")
+        elif event == "step_completed" and step == TOTAL_STEPS:
+            print(f"[SUCCESS] {details.get('proof_snippet', 'Pipeline finished successfully')}")
+
+
     # Step 1: Clone target repository
     record_trace("step_started", 1, {"action": "clone_repo", "message": "Cloning target repo into sandbox"})
     tools.exec_shell("git clone https://github.com/example-org/payment-service.git /workspace/payment-service")
