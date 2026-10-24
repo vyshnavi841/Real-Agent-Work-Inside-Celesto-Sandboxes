@@ -10,13 +10,17 @@ DATABASE_URL = os.getenv("DATABASE_URL", "postgresql://ledger:ledger@ledger:5432
 
 # Fallback mechanism for local testing without active Postgres
 try:
-    engine = create_engine(DATABASE_URL, pool_pre_ping=True)
+    if "postgresql" in DATABASE_URL:
+        engine = create_engine(DATABASE_URL, pool_pre_ping=True, connect_args={"connect_timeout": 1})
+    else:
+        engine = create_engine(DATABASE_URL, pool_pre_ping=True)
     # Test connection
     with engine.connect() as conn:
         pass
 except Exception as e:
     logger.warning("Postgres unavailable at %s (%s). Falling back to local SQLite ledger.", DATABASE_URL, e)
     engine = create_engine("sqlite:///./ledger.db", connect_args={"check_same_thread": False})
+
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
